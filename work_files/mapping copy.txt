@@ -1,3 +1,0 @@
-subnet,templateName,site,P2P_ONBOARDING_IP_ADDRESS,P2P_ONBOARDING_GW,P2P_ONBOARDING_VLAN,HOSTNAME
-172.20.10.0/24,Global/Denner/Aargau/Store-10/Store-10-1,C9k_Onboarding-Template,172.20.10.2,172.20.10.1,20,store010-s20006
-172.20.101.0/24,Global/Denner/Aargau/Store-101/Store-101-1,C9k_Onboarding-Template,172.20.101.2,172.20.101.1,20,store101-s20007
