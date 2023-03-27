@@ -26,3 +26,5 @@ templateId=api.configuration_templates.get_templates_details(name="C9k_Onboardin
 print("siteId="+siteId)
 print("deviceId="+deviceId)
 print("templateId="+templateId)
+
+api.device_onboarding_pnp.claim_a_device_to_a_site(configInfo=None, deviceId=deviceId, siteId=siteId)
