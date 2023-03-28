@@ -7,7 +7,7 @@ $ python -m venv venv
 $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
-Webhook test payload
+Webhook Switch test payload
 
 ```
 {
@@ -15,3 +15,9 @@ Webhook test payload
     "deviceName": "JAE231609EK"
 }
 ```
+Webhook AP test payload
+```
+{
+    "ipAddress": "172.20.201.10",
+    "deviceName": "FCW2433P1L7"
+}
