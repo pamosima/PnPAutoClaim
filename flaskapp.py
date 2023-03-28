@@ -49,27 +49,27 @@ def dnac_alert_received():
                 print(row) 
 
                 siteId = api.sites.get_site(name=str(row["site"]))["response"][0]["id"]
-                templateId = api.configuration_templates.get_templates_details(name=str(row["templateName"]))["response"][0]["id"]
                 
                 if str(row["type"]) == "Default":
                     templateId = api.configuration_templates.get_templates_details(name=str(row["templateName"]))["response"][0]["id"]
-                    rfProfile = "none"
+                    configInfo = {'configId': templateId, 
+                                'configParameters': [{'key': 'HOSTNAME', 'value': str(row["HOSTNAME"])},
+                                                    {'key': 'P2P_ONBOARDING_IP_ADDRESS', 'value': str(row["P2P_ONBOARDING_IP_ADDRESS"])},
+                                                    {'key': 'P2P_ONBOARDING_GW', 'value': str(row["P2P_ONBOARDING_GW"])},
+                                                    {'key': 'P2P_ONBOARDING_VLAN', 'value': str(int(row["P2P_ONBOARDING_VLAN"]))}]}
+                    api.device_onboarding_pnp.claim_a_device_to_a_site(configInfo=configInfo, 
+                                                    hostname=str(row["HOSTNAME"]),  
+                                                    deviceId=deviceId, 
+                                                    siteId=siteId, 
+                                                    type=str(row["type"]))
                 elif str(row["type"]) == "AccessPoint":
-                    templateId="none"
-                    rfProfile=str(row["rfProfile"])
-
-                configInfo = {'configId': templateId, 
-                            'configParameters': [{'key': 'HOSTNAME', 'value': str(row["HOSTNAME"])},
-                                                {'key': 'P2P_ONBOARDING_IP_ADDRESS', 'value': str(row["P2P_ONBOARDING_IP_ADDRESS"])},
-                                                {'key': 'P2P_ONBOARDING_GW', 'value': str(row["P2P_ONBOARDING_GW"])},
-                                                {'key': 'P2P_ONBOARDING_VLAN', 'value': str(row["P2P_ONBOARDING_VLAN"])}]}
+                    api.device_onboarding_pnp.claim_a_device_to_a_site(hostname=str(row["HOSTNAME"]),  
+                                                    deviceId=deviceId, 
+                                                    siteId=siteId, 
+                                                    type=str(row["type"]),
+                                                    rfProfile=str(row["rfProfile"]))
                 
-                api.device_onboarding_pnp.claim_a_device_to_a_site(configInfo=configInfo, 
-                                                                    hostname=str(row["HOSTNAME"]),  
-                                                                    deviceId=deviceId, 
-                                                                    siteId=siteId, 
-                                                                    type=str(row["type"]),
-                                                                    rfProfile=rfProfile)
+
         return("Webhook Recieved")
 
 
