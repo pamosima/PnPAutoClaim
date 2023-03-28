@@ -20,22 +20,23 @@ import json
 import pandas as pd
 import ipaddress
 
-# Create a DNACenterAPI connection object; it uses DNA Center username and password, with DNA Center API version 1.2.10
-# The base_url used by default is `from dnacentersdk.config import DEFAULT_BASE_URL`
-api = DNACenterAPI(username='admin', 
-                   password='C1sco12345', 
-                   base_url="https://dnac.its-best.ch:443", 
-                   version='2.3.3.0', 
-                   verify=False)
-
-file = pd.read_csv("work_files/mapping.txt", sep = ",")
-
 # get ip and serial no from webhook
 # ip = "172.20.101.2" 
 # serialNo = "JAE231609EK"
 
+dnacIP = "dnac.its-best.ch"
 ip = "172.20.201.10" 
 serialNo = "FCW2433P1L7"
+
+# Create a DNACenterAPI connection object; it uses DNA Center username and password, with DNA Center API version 1.2.10
+# The base_url used by default is `from dnacentersdk.config import DEFAULT_BASE_URL`
+api = DNACenterAPI(username='admin', 
+                   password='C1sco12345', 
+                   base_url="https://"+dnacIP+":443", 
+                   version='2.3.3.0', 
+                   verify=False)
+
+file = pd.read_csv("work_files/mapping.txt", sep = ",")
 
 deviceId=api.device_onboarding_pnp.get_device_list(serial_number=serialNo)[0]["id"]
 print("deviceId="+deviceId)
