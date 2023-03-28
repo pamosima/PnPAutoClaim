@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 
 # Copyright (c) 2021 Cisco and/or its affiliates.
 
@@ -16,22 +17,42 @@
 
 from dnacentersdk import DNACenterAPI
 import json
+import pandas as pd
+import ipaddress
+
 # Create a DNACenterAPI connection object; it uses DNA Center username and password, with DNA Center API version 1.2.10
 # The base_url used by default is `from dnacentersdk.config import DEFAULT_BASE_URL`
-api = DNACenterAPI(username='admin', password='C1sco12345', base_url="https://dnac.its-best.ch:443", version='2.3.3.0', verify=False)
+api = DNACenterAPI(username='admin', 
+                   password='C1sco12345', 
+                   base_url="https://dnac.its-best.ch:443", 
+                   version='2.3.3.0', 
+                   verify=False)
 
-site ="Global/Denner/Aargau/Store-101/Store-101-1"
-templateName = "C9k_Onboarding-Template"
-p2p_onboarding_ip_address = "172.20.10.2"
-p2p_onboarding_gw = "172.20.10.1"
-p2p_onbarding_vlan = "20"
-hostname = "store010-s20006"
+file = pd.read_csv("work_files/mapping.txt", sep = ",")
 
-siteId=api.sites.get_site(name=site)["response"][0]["id"]
-deviceId=api.device_onboarding_pnp.get_device_list(serial_number="JAE231609EK")[0]["id"]
-templateId=api.configuration_templates.get_templates_details(name=templateName)["response"][0]["id"]
-print("siteId="+siteId)
+# get ip and serial no from webhook
+ip = "172.20.101.2" 
+serialNo = "JAE231609EK"
+
+deviceId=api.device_onboarding_pnp.get_device_list(serial_number=serialNo)[0]["id"]
 print("deviceId="+deviceId)
-print("templateId="+templateId)
 
-api.device_onboarding_pnp.claim_a_device_to_a_site(configInfo={'configId': templateId, 'configParameters': [{'key': 'HOSTNAME', 'value': hostname},{'key': 'P2P_ONBOARDING_IP_ADDRESS', 'value': p2p_onboarding_ip_address},{'key': 'P2P_ONBOARDING_GW', 'value': p2p_onboarding_gw},{'key': 'P2P_ONBOARDING_VLAN', 'value': p2p_onbarding_vlan}]}, hostname=hostname,  deviceId=deviceId, siteId=siteId, type="Default")
+for inx, row in file.iterrows(): 
+    if ipaddress.ip_address(ip) in ipaddress.ip_network(row['subnet']):
+       
+        print(row) 
+
+        siteId = api.sites.get_site(name=str(row["site"]))["response"][0]["id"]
+        templateId = api.configuration_templates.get_templates_details(name=str(row["templateName"]))["response"][0]["id"]
+
+        configInfo2 = {'configId': templateId, 
+                      'configParameters': [{'key': 'HOSTNAME', 'value': str(row["HOSTNAME"])},
+                                           {'key': 'P2P_ONBOARDING_IP_ADDRESS', 'value': str(row["P2P_ONBOARDING_IP_ADDRESS"])},
+                                           {'key': 'P2P_ONBOARDING_GW', 'value': str(row["P2P_ONBOARDING_GW"])},
+                                           {'key': 'P2P_ONBOARDING_VLAN', 'value': str(row["P2P_ONBOARDING_VLAN"])}]}
+        
+        api.device_onboarding_pnp.claim_a_device_to_a_site(configInfo=configInfo2, 
+                                                            hostname=str(row["HOSTNAME"]),  
+                                                            deviceId=deviceId, 
+                                                            siteId=siteId, 
+                                                            type="Default")
