@@ -31,8 +31,11 @@ api = DNACenterAPI(username='admin',
 file = pd.read_csv("work_files/mapping.txt", sep = ",")
 
 # get ip and serial no from webhook
-ip = "172.20.101.2" 
-serialNo = "JAE231609EK"
+# ip = "172.20.101.2" 
+# serialNo = "JAE231609EK"
+
+ip = "172.20.201.10" 
+serialNo = "FCW2433P1L7"
 
 deviceId=api.device_onboarding_pnp.get_device_list(serial_number=serialNo)[0]["id"]
 print("deviceId="+deviceId)
@@ -43,8 +46,15 @@ for inx, row in file.iterrows():
         print(row) 
 
         siteId = api.sites.get_site(name=str(row["site"]))["response"][0]["id"]
-        templateId = api.configuration_templates.get_templates_details(name=str(row["templateName"]))["response"][0]["id"]
-
+        
+        if str(row["type"]) == "Default":
+            templateId = api.configuration_templates.get_templates_details(name=str(row["templateName"]))["response"][0]["id"]
+            rfProfile = "none"
+        elif str(row["type"]) == "AccessPoint":
+            templateId="none"
+            rfProfile=str(row["rfProfile"])
+        
+        
         configInfo2 = {'configId': templateId, 
                       'configParameters': [{'key': 'HOSTNAME', 'value': str(row["HOSTNAME"])},
                                            {'key': 'P2P_ONBOARDING_IP_ADDRESS', 'value': str(row["P2P_ONBOARDING_IP_ADDRESS"])},
@@ -55,4 +65,5 @@ for inx, row in file.iterrows():
                                                             hostname=str(row["HOSTNAME"]),  
                                                             deviceId=deviceId, 
                                                             siteId=siteId, 
-                                                            type="Default")
+                                                            type=str(row["type"]),
+                                                            rfProfile=rfProfile)
