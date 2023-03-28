@@ -22,12 +22,6 @@ import ipaddress
 
 app = Flask(__name__)
 
-api = DNACenterAPI(username='admin', 
-                   password='C1sco12345', 
-                   base_url="https://dnac.its-best.ch:443", 
-                   version='2.3.3.0', 
-                   verify=False)
-
 file = pd.read_csv("work_files/mapping.txt", sep = ",")
 
 
@@ -37,15 +31,17 @@ def dnac_alert_received():
         dnac_notification = request.get_json()
         print(dnac_notification)
         
-        # TODO: test if the right values are return form the webhook
         ip = dnac_notification['details']['ipAddress']
-        deviceId = dnac_notification['network']['deviceId'] #check if this value is correct
+        serialNo = dnac_notification['details']['deviceName']
+        dnacIP =  dnac_notification['dnacIP']
+        
+        api = DNACenterAPI(username='admin', 
+                   password='C1sco12345', 
+                   base_url="https://"+dnacIP+":443", 
+                   version='2.3.3.0', 
+                   verify=False)
 
-        #deviceName = dnac_notification['details']['deviceName']\
-        #ip = "172.20.101.2" 
-        #serialNo = "JAE231609EK"
-        #deviceId=api.device_onboarding_pnp.get_device_list(serial_number=serialNo)[0]["id"]
-        #print("deviceId="+deviceId)
+        deviceId = api.device_onboarding_pnp.get_device_list(serial_number=serialNo)[0]["id"]
 
         for inx, row in file.iterrows(): 
             if ipaddress.ip_address(ip) in ipaddress.ip_network(row['subnet']):
@@ -54,6 +50,13 @@ def dnac_alert_received():
 
                 siteId = api.sites.get_site(name=str(row["site"]))["response"][0]["id"]
                 templateId = api.configuration_templates.get_templates_details(name=str(row["templateName"]))["response"][0]["id"]
+                
+                if str(row["type"]) == "Default":
+                    templateId = api.configuration_templates.get_templates_details(name=str(row["templateName"]))["response"][0]["id"]
+                    rfProfile = "none"
+                elif str(row["type"]) == "AccessPoint":
+                    templateId="none"
+                    rfProfile=str(row["rfProfile"])
 
                 configInfo = {'configId': templateId, 
                             'configParameters': [{'key': 'HOSTNAME', 'value': str(row["HOSTNAME"])},
@@ -65,7 +68,8 @@ def dnac_alert_received():
                                                                     hostname=str(row["HOSTNAME"]),  
                                                                     deviceId=deviceId, 
                                                                     siteId=siteId, 
-                                                                    type="Default")
+                                                                    type=str(row["type"]),
+                                                                    rfProfile=rfProfile)
         return("Webhook Recieved")
 
 
