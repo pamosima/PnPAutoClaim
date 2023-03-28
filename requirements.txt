@@ -1,0 +1,2 @@
+dnacentersdk==2.5.6
+pandas==1.5.3
