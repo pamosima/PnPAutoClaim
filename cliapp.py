@@ -21,12 +21,12 @@ import pandas as pd
 import ipaddress
 
 # get ip and serial no from webhook
-# ip = "172.20.101.2" 
-# serialNo = "JAE231609EK"
+ip = "172.20.101.2" 
+serialNo = "JAE231609EK"
 
 dnacIP = "dnac.its-best.ch"
-ip = "172.20.201.10" 
-serialNo = "FCW2433P1L7"
+# ip = "172.20.201.10" 
+# serialNo = "FCW2433P1L7"
 
 # Create a DNACenterAPI connection object; it uses DNA Center username and password, with DNA Center API version 1.2.10
 # The base_url used by default is `from dnacentersdk.config import DEFAULT_BASE_URL`
@@ -48,20 +48,23 @@ for inx, row in file.iterrows():
 
         siteId = api.sites.get_site(name=str(row["site"]))["response"][0]["id"]
         
+        hostname = str(row["hostname_prefix"])+"-"+serialNo[-3:].lower()
+        print("hostname="+hostname)
+        
         if str(row["type"]) == "Default":
             templateId = api.configuration_templates.get_templates_details(name=str(row["templateName"]))["response"][0]["id"]
             configInfo = {'configId': templateId, 
-                            'configParameters': [{'key': 'HOSTNAME', 'value': str(row["HOSTNAME"])},
+                            'configParameters': [{'key': 'HOSTNAME', 'value': hostname},
                                                 {'key': 'P2P_ONBOARDING_IP_ADDRESS', 'value': str(row["P2P_ONBOARDING_IP_ADDRESS"])},
                                                 {'key': 'P2P_ONBOARDING_GW', 'value': str(row["P2P_ONBOARDING_GW"])},
                                                 {'key': 'P2P_ONBOARDING_VLAN', 'value': str(int(row["P2P_ONBOARDING_VLAN"]))}]}
             api.device_onboarding_pnp.claim_a_device_to_a_site(configInfo=configInfo, 
-                                                hostname=str(row["HOSTNAME"]),  
+                                                hostname=hostname,  
                                                 deviceId=deviceId, 
                                                 siteId=siteId, 
                                                 type=str(row["type"]))
         elif str(row["type"]) == "AccessPoint":
-            api.device_onboarding_pnp.claim_a_device_to_a_site(hostname=str(row["HOSTNAME"]),  
+            api.device_onboarding_pnp.claim_a_device_to_a_site(hostname=hostname,  
                                                 deviceId=deviceId, 
                                                 siteId=siteId, 
                                                 type=str(row["type"]),
