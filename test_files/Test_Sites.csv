@@ -1,0 +1,8 @@
+﻿*GroupName,ParentHierarchy,*GroupTypes,namespace:Provision:routerSerialNumber,namespace:Provision:serverSerialNumber,namespace:mapsSummary:isCadFile,namespace:mapsSummary:floorIndex,namespace:mapsSummary:rfModel,namespace:mapGeometry:width,namespace:mapGeometry:height,namespace:mapGeometry:length,namespace:mapGeometry:offsetX,namespace:mapGeometry:offsetY,namespace:Location:latitude,namespace:Location:longitude,*namespace:Location:type,namespace:Location:country,namespace:Location:address
+DevNet,Global,SITE,,,,,,,,,,,,,area,,
+Zurich,Global/DevNet,SITE,,,,,,,,,,,,,area,,
+Site-101,Global/DevNet/Zurich,SITE,,,,,,,,,,,47.409871,8.590509,building,Switzerland,"Richtistrasse 7, 8304 Wallisellen, Switzerland"
+Site-101-1,Global/DevNet/Zurich/Site-101,SITE,,,FALSE,1,65065,100,100,100,0,0,,,floor,,"Richtistrasse 7, 8304 Wallisellen, Switzerland"
+Bern,Global/DevNet,SITE,,,,,,,,,,,,,area,,
+Site-102,Global/DevNet/Bern,SITE,,,,,,,,,,,46.934721,7.389643,building,Switzerland,"Morgenstrasse 129, 3018 Bern, Switzerland"
+Site-102-1,Global/DevNet/Bern/Site-102,SITE,,,FALSE,1,65065,100,100,100,0,0,,,floor,,"Morgenstrasse 129, 3018 Bern, Switzerland"
