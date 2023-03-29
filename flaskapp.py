@@ -22,7 +22,7 @@ import ipaddress
 
 app = Flask(__name__)
 
-file = pd.read_csv("work_files/mapping.txt", sep = ",")
+file = pd.read_csv("work_files/mapping.csv", sep = ",")
 
 
 @app.route('/claim', methods=['POST'])
