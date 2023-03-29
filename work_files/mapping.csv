@@ -1,4 +1,5 @@
 subnet,site,type,rfProfile,templateName,P2P_ONBOARDING_IP_ADDRESS,P2P_ONBOARDING_GW,P2P_ONBOARDING_VLAN,HOSTNAME
-172.20.10.0/24,Global/DevNet/Aargau/Site-10,Default,none,C9k_Onboarding-Template,172.20.10.2,172.20.10.1,20,site010-s20006
-172.20.101.0/24,Global/DevNet/Aargau/Site-101,Default,none,C9k_Onboarding-Template,172.20.101.2,172.20.101.1,20,site101-s20007
-172.20.201.0/24,Global/DevNet/Aargau/Site-101/Site-101-1,AccessPoint,TYPICAL,,,,,site101-a20001
+172.20.101.0/24,Global/DevNet/Zurich/Site-101,Default,none,C9k_Onboarding-Template,172.20.101.2,172.20.101.1,20,site101-s20007
+172.20.201.0/24,Global/DevNet/Zurich/Site-101/Site-101-1,AccessPoint,TYPICAL,,,,,site101-a20001
+172.20.102.0/24,Global/DevNet/Bern/Site-102,Default,none,C9k_Onboarding-Template,172.20.10.2,172.20.10.1,20,site002-s20006
+172.20.202.0/24,Global/DevNet/Bern/Site-102/Site-102-1,AccessPoint,TYPICAL,,,,,site102-a20001
