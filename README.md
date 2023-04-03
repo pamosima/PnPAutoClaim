@@ -1,5 +1,5 @@
 # Cisco DNA Center PnP Onboarding Automation using Webhook Notification
-This repository contains a set of scripts that automate the process of onboarding devices using Plug and Play (PnP) in Cisco DNA Center. The scripts address use cases where devices are onboarded without knowing the serial number in advance, which is a common scenario when a site has a specific IP subnet allocated to it.
+This repository contains a Python Flask application that automate the process of onboarding devices using Plug and Play (PnP) in Cisco DNA Center. The scripts address use cases where devices are onboarded without knowing the serial number in advance, which is a common scenario when a site has a specific IP subnet allocated to it.
 
 The scripts utilize the webhook notification option of Cisco DNA Center's "unclaimed" process. When a device contacts DNAC, information such as its IP address and serial number is sent via webhook to our Flask application. The application then maps the IP subnet to a configuration file that includes parameter mapping to variables, and claims the device based on its IP address.
 
