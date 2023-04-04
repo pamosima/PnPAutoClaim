@@ -35,9 +35,7 @@ def dnac_alert_received():
         serialNo = dnac_notification['details']['deviceName']
         dnacIP =  dnac_notification['dnacIP']
         
-        api = DNACenterAPI(username='admin', 
-                   password='C1sco12345', 
-                   base_url="https://"+dnacIP+":443", 
+        api = DNACenterAPI(base_url="https://"+dnacIP+":443", 
                    version='2.3.3.0', 
                    verify=False)
 
