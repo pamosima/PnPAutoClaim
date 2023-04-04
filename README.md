@@ -16,6 +16,14 @@ $ python -m venv venv
 $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
+Set credentials as environment variables
+```
+$ cat mycredentials.sh
+DNA_CENTER_USERNAME=your_username_here
+DNA_CENTER_PASSWORD=your_password_here
+$ source mycredentials.sh
+$ python flaskapp.py
+```
 
 ### Cisco DNA Center 
 ```Minimum version > 2.3.3.x```
