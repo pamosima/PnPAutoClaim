@@ -3,11 +3,15 @@ This repository contains a Python Flask application that automate the process of
 
 The scripts utilize the webhook notification option of Cisco DNA Center's "unclaimed" process. When a device contacts DNAC, information such as its IP address and serial number is sent via webhook to our Flask application. The application then maps the IP subnet to a configuration file that includes parameter mapping to variables, and claims the device based on its IP address.
 
-To streamline the onboarding process, we have leveraged multiple scripts available on the [CiscoDevNet/DNAC-onboarding-tools GitHub repository](https://github.com/CiscoDevNet/DNAC-onboarding-tools). Our scripts provide an efficient and automated solution to onboard devices in Cisco DNA Center, improving network provisioning time and reducing manual effort.
-
 Feel free to contribute to this repository and enhance the automation process further.
 
-## Requirements
+## Usage
+```
+$ source venv/bin/activate
+$ python flaskapp.py
+```
+
+## Installation
 ### Python
 Create a virtual environment and install the packages according to the requirements.txt
 
@@ -60,7 +64,7 @@ On the Summary page click on **Finish**
 
 Done! Your new notification is complete.
 
-## How to test
+## Usage
 ### 1. Import Test Sites
 Choose **Design > Network Hierarchy** and click **Import Sites**
 <img width="1396" alt="image" src="https://user-images.githubusercontent.com/16715420/229137139-7f9a62f6-42d6-493e-aa42-7a54b510fff7.png">
@@ -105,6 +109,22 @@ Webhook AP test payload
     "deviceName": "FCW2433P1L7"
 }
 ```
+
+## Authors & Maintainers
+
+Smart people responsible for the creation and maintenance of this project:
+
+- Anna Summerauer <asummera@cisco.com>
+- Patrick Mosimann <pamosima@cisco.com>
+
+## Credits
+
+To streamline the onboarding process, we have leveraged multiple scripts available on the [CiscoDevNet/DNAC-onboarding-tools GitHub repository](https://github.com/CiscoDevNet/DNAC-onboarding-tools). Our scripts provide an efficient and automated solution to onboard devices in Cisco DNA Center, improving network provisioning time and reducing manual effort.
+
+## License
+
+This project is licensed to you under the terms of the [Cisco Sample
+Code License](./LICENSE).
 
 ## Issues/Comments
 
