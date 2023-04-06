@@ -5,12 +5,6 @@ The scripts utilize the webhook notification option of Cisco DNA Center's "uncla
 
 Feel free to contribute to this repository and enhance the automation process further.
 
-## Usage
-```
-$ source venv/bin/activate
-$ python flaskapp.py
-```
-
 ## Installation
 ### Python
 Create a virtual environment and install the packages according to the requirements.txt
@@ -20,15 +14,6 @@ $ python -m venv venv
 $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
-Set credentials as environment variables
-```
-$ cat mycredentials.sh
-DNA_CENTER_USERNAME=your_username_here
-DNA_CENTER_PASSWORD=your_password_here
-$ source mycredentials.sh
-$ python flaskapp.py
-```
-
 ### Cisco DNA Center 
 ```Minimum version > 2.3.3.x```
 
@@ -73,20 +58,34 @@ On the Summary page click on **Finish**
 Done! Your new notification is complete.
 
 ## Usage
-### 1. Import Test Sites
+### Python
+Set credentials as environment variables:
+```
+$ cat mycredentials.sh
+DNA_CENTER_USERNAME=your_username_here
+DNA_CENTER_PASSWORD=your_password_here
+```
+Run application:
+```
+$ source venv/bin/activate
+$ source mycredentials.sh
+$ python flaskapp.py
+```
+### Cisco DNA Center 
+#### 1. Import Test Sites
 Choose **Design > Network Hierarchy** and click **Import Sites**
 <img width="1396" alt="image" src="https://user-images.githubusercontent.com/16715420/229137139-7f9a62f6-42d6-493e-aa42-7a54b510fff7.png">
 Choose a file or drag and drop to upload: `/test_files/Test_Sites.csv`
 Click **Upload** and then **Import**
 
-### 2. Import CLI Template
+#### 2. Import CLI Template in DNAC
 Choose **Tools > Template Editor** and click **Onboarding Configuration**
 
 Hover over the project **Onboarding Configuration**, click the gear icon, and click **Import Template**
 
 import the template from `/test_files/C9k_Onboarding-Template.json`
 
-### 3. Import Test Devices
+#### 3. Import Test Devices
 Choose **Provision > Network Devices > Plug and Play** and click on **Add Devices**
 <img width="774" alt="image" src="https://user-images.githubusercontent.com/16715420/229139847-a7211914-7273-45c3-af69-a888fd0b29d9.png">
 
@@ -96,7 +95,7 @@ Select **Bulk Devices** and the devices using `/test_files/Test_DeviceImportTemp
 
 Select the Devices and click on add
 
-### 4. Send notification to webhook
+#### 4. Send notification to webhook
 Choose **Platform > Developer Toolkit > Event Notifications > Event Catalog**
 
 Search for Device waiting to be claimed
