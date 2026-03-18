@@ -3,7 +3,7 @@
 
 """Python Script Console Script.
 
-Copyright (c) 2023 Cisco and/or its affiliates.
+Copyright (c) 2026 Cisco and/or its affiliates.
 
 This software is licensed to you under the terms of the Cisco Sample
 Code License, Version 1.1 (the "License"). You may obtain a copy of the
@@ -28,7 +28,7 @@ import ipaddress
 __author__ = "Patrick Mosimann"
 __email__ = "pamosima@cisco.com"
 __version__ = "0.1.0"
-__copyright__ = "Copyright (c) 2023 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2026 Cisco and/or its affiliates."
 __license__ = "Cisco Sample Code License, Version 1.1"
 
 app = Flask(__name__)
